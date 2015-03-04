@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.jejunu.daumtrack.dao.DataMapper">
+	
+	<resultMap id="dataMap" type="kr.ac.jejunu.daumtrack.dao.DataVo">
+		<result	property="dstStationId"		column="dstStationId" />
+		<result property="orgtStationId"	column="orgtStationId" />
+		<result property="routeId"			column="routeId" />
+		<result property="routeNm"			column="routeNm" />
+		<result property="routeNum"			column="routeNum" />
+		<result property="routeSubNm"		column="routeSubNm" />
+		<result property="stationCnt"		column="stationCnt" />
+	</resultMap>
+
+	<select id="select" resultMap="dataMap">
+		SELECT  * FROM busList
+	</select>
+
+	<select id="selectOne" resultMap="dataMap">
+		SELECT  * FROM busList WHERE routeId = #{routeId}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO busList ( dstStationId, orgtStationId, routeId, routeNm, routeNum, routeSubNm, stationCnt ) VALUES (
+			#{dstStationId}
+			, #{orgtStationId}
+			, #{routeId}
+			, #{routeNm}
+			, #{routeNum}
+			, #{routeSubNm}
+			, #{stationCnt}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE busList SET
+			dstStation = #{dstStation},
+			orgtStation = #{orgtStation},
+			routeId = #{routeId},
+			routeNm = #{routeNm},
+			routeNum = #{routeNum},
+			routeSubNm = #{routeSubNm},
+			stationCnt = #{stationCnt},
+		WHERE routeId = #{routeId} LIMIT 1
+	</update>
+
+	<delete id="delete">
+		DELETE FROM busList WHERE routeId = #{routeId}
+	</delete>
+	
+	<resultMap type="kr.ac.jejunu.daumtrack.dao.BusStationDataVo" id="busStationdataMap">
+		<result property="stationId"	column="stationId" />
+		<result property="stationNm"	column="stationNm" />
+		<result property="localY"		column="localY" />
+		<result property="localX"		column="localX" />
+	</resultMap>
+	
+	<select id="selectBusStationList" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT * FROM busStation 
+	</select>
+	
+	<select id="selectBusStation" resultMap="busStationdataMap">
+		SELECT * FROM busStation WHERE stationId = #{stationId}
+	</select>
+</mapper>

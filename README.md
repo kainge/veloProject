@@ -1,2 +1,0 @@
-# veloProject
-Velo Project
